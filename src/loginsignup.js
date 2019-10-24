@@ -1,52 +1,62 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {Login} from './login';
-import {Signup} from './signup';
-
+import { Login } from './login';
+import { Signup } from './signup';
+import { Home } from './home';
 export class LoginSignup extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state= { isLoggedIn : props.handleLogin };
+    this.state = { isLoggedIn: props.handleLogin };
   }
-  
+
   render() {
-    const {isLoggedIn} = this.state;
+    const { isLoggedIn } = this.state;
     console.log("isLoggedIn", this.state.isLoggedIn);
-    return(
+    return (
       <Router>
         <div className="container">
-        <nav className="navbar">
-          <ul style={{float: "right"}}>
+          <nav className="navbar">
+            <ul style={{ float: "right" }}>
               <li>
                 <Link to="/login">Login</Link>
               </li>
               <li>
                 {!isLoggedIn && <Link to="/signup">Signup</Link>}
               </li>
+              <li>
+              {!isLoggedIn && <Link to="/home">Home</Link>}
+              </li>
             </ul>
-            </nav>
+          </nav>
           <hr />
           <Route path="/login" component={login} />
           <Route path="/signup" component={signup} />
+          <Route path="/home" component={home} />
+       
         </div>
       </Router>
     );
-  } 
+  }
 }
 
-LoginSignup.defaultProps={
-    handleLogin: false
+LoginSignup.defaultProps = {
+  handleLogin: false
 }
 
 
 function login() {
-  return(
+  return (
     <Login />
   );
 }
 
 function signup() {
-  return(
+  return (
     <Signup />
+  );
+}
+function home() {
+  return (
+    <Home />
   );
 }

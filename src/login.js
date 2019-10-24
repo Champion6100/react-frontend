@@ -1,78 +1,107 @@
-import React from 'react';
-import axios from 'axios';
+import React from 'react'
+import axios from 'axios'
+import swal from 'sweetalert';
+import { Redirect } from 'react-router-dom'
 export class Login extends React.Component {
-    constructor(props){
-        super(props);
-        this.state= {isLoggedIn: false,
-            authValidate: false
-        };
-        this.logout = this.logout.bind(this);
+    constructor(props) {
+        super(props)
+        this.state = {
+            full_name: '',
+            pswd: '',
+           
+            formErrors: {
+                full_name: '',
+                pswd: ''
+            }
+        }
     }
-    handleLogin() {
-        let login_values = [];
-        let status = '';
-        var form_all = document.getElementsByTagName("input");
-        console.log(form_all);
-        for (var i = 0; i < form_all.length; i++) {
 
-
-            login_values[i] = form_all[i].value;
-
-
-        }
-        console.log(login_values);
-        const user_login = {
-            'username': login_values[0],
-            'password': login_values[1]
-          
-        }
-        console.log('Values', user_login);
-        axios.post(`http://localhost:3000/api/login`, user_login)
+    changeHandler = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+    submitHandler = e => {
+        e.preventDefault()
+        console.log(`
+         --SUBMITTING-- 
+         Full Name: ${this.state.full_name}
+           Password: ${this.state.pswd}
+     `)
+        console.log(this.state)
+        axios.post('http://localhost:3000/api/login', this.state)
             .then(res => {
-                console.log(res);
-                console.log(res.data.success);
-                localStorage.setItem('jwtToken', res.data.token);
-                //history.push('/dashboard');
+              //  console.log(response)
+                console.log(res.data);
+                localStorage.setItem('token', res.data);
+              //  Object.assign(req.defaults, {
+               //     headers: { 'x-access-token': localStorage.getItem('token') }//Here we are retreiving the access token in our localstorage
+                //    })
+         
             })
             .catch((error) => {
-                if(error.response.status === 401) {
-                  console.log('Login failed. Username or password not match');
+                if (error.response.status === 401) {
+                    console.log('Login failed. Username or password not match');
                 }
-              });
-        
+            });
+    }
+    handleChange = e => {
+        e.preventDefault();
 
+        const { name, value } = e.target;
+        let formErrors = this.state.formErrors;
+
+        switch (name) {
+            case 'full_name':
+                formErrors.full_name = value.length < 6 ? "Minimum 6 characters required" : "";
+                break;
+
+            case 'pswd':
+                formErrors.pswd = value.length < 8 ? "Minimum 8 characters required" : "";
+                break;
+
+            default:
+                break;
+        }
+
+        this.setState({ formErrors, [name]: value }, () => console.log(this.state));
     }
-    logout(){
-        this.setState({authValidate: !this.state.authValidate, isLoggedIn:false});
-    }
+
+
     render() {
-        console.log("authValidate", this.state.authValidate);
-        console.log("login",this.state.isLoggedIn);
-        return(
-            (!this.state.authValidate)?(
-                <div>
-                    <h2>Login</h2>
-                    <hr />
-                    <form>
-                        <div className="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" className="form-control" id="email" placeholder="Enter email" name="email" required />
-                            <div id="validate_name"></div>
-                        </div>
-                        <div className="form-group">
-                            <label for="pwd">Password:</label>
-                            <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pwd" required/>
-                        </div>
-                        <button type="submit" className="btn" onClick={this.logout}>Login</button>
-                    </form>
-                </div>
-            ):(
-                <div>
-                    <h2>You Successfully Logged In!!!</h2>
-                    <button onClick={this.logout} className="btn">Logout</button>
-                    {/* <LoginSignup handleLogin={this.state.isLoggedIn}/> */}
-                </div>
+        const { full_name, e_mail, pswd } = this.state
+        const { formErrors } = this.state;
+      
+        return (
+       
+           
+            <div>
+                <h2>Login</h2>
+                <form onSubmit={this.submitHandler}>
+                    <div className="form-group">
+                        <label for="full_name">Full Name:</label>
+                        <input type="text" name="full_name" value={full_name} placeholder="Enter Full Name" className="form-control" onChange={this.changeHandler} onChange={this.handleChange} />
+                        {formErrors.full_name.length > 0 && (
+                            <span className="errorMessage">{formErrors.full_name}</span>
+                        )}
+                    </div>
+                    <div className="form-group">
+                        <label for="pswd">Password:</label>
+                        <input type="password" name="pswd" value={pswd} placeholder="Enter password" className="form-control" onChange={this.changeHandler} onChange={this.handleChange} />
+                        {formErrors.pswd.length > 0 && (
+                            <span className="errorMessage">{formErrors.pswd}</span>
+                        )}
+                    </div>
+                    <div>
+                        <button type="submit">Login</button>
+                    </div>
+                  
+
+                </form>
+
+            </div>
+            
+            
             )
-        );
+        
     }
 }
+
