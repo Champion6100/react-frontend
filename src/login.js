@@ -1,14 +1,11 @@
 import React from 'react'
 import axios from 'axios'
-import swal from 'sweetalert';
-import { Redirect } from 'react-router-dom'
 export class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             full_name: '',
-            pswd: '',
-           
+            pswd: '',          
             formErrors: {
                 full_name: '',
                 pswd: ''
@@ -16,7 +13,7 @@ export class Login extends React.Component {
         }
     }
 
-    changeHandler = (e) => {
+    changeHandler = (e) => {                                   //e=event
         this.setState({ [e.target.name]: e.target.value })
     }
     submitHandler = e => {
@@ -29,12 +26,8 @@ export class Login extends React.Component {
         console.log(this.state)
         axios.post('http://localhost:3000/api/login', this.state)
             .then(res => {
-              //  console.log(response)
                 console.log(res.data);
-                localStorage.setItem('token', res.data);
-              //  Object.assign(req.defaults, {
-               //     headers: { 'x-access-token': localStorage.getItem('token') }//Here we are retreiving the access token in our localstorage
-                //    })
+                localStorage.setItem('token', res.data);         
          
             })
             .catch((error) => {
@@ -64,15 +57,11 @@ export class Login extends React.Component {
 
         this.setState({ formErrors, [name]: value }, () => console.log(this.state));
     }
-
-
     render() {
-        const { full_name, e_mail, pswd } = this.state
-        const { formErrors } = this.state;
-      
-        return (
-       
-           
+        const { full_name, pswd } = this.state
+        const { formErrors } = this.state;    
+        
+        return (           
             <div>
                 <h2>Login</h2>
                 <form onSubmit={this.submitHandler}>

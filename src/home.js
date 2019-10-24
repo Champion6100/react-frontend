@@ -15,7 +15,7 @@ export class Home extends React.Component {
         e.preventDefault()
 
         console.log(this.state)
-        axios.get('http://localhost:3000/api/home', {
+        axios.get('http://localhost:3000/home', {
           headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
         }).then(res => {
           console.log('success'

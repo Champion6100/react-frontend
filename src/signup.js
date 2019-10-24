@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import swal from 'sweetalert';
-import { Redirect } from 'react-router-dom'
 const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 export class Signup extends React.Component {
     constructor(props) {
@@ -42,9 +41,6 @@ export class Signup extends React.Component {
                                 value: "catch",
                             }
                         })
-                        .then((value) => {
-                            return <Redirect to='/login' />
-                        });
                 }
             })
             .catch(error => {
