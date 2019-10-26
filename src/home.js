@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import swal from 'sweetalert';
-import { Redirect } from 'react-router-dom'
+
 export class Home extends React.Component {
     constructor(props) {
         super(props)
@@ -15,7 +14,7 @@ export class Home extends React.Component {
         e.preventDefault()
 
         console.log(this.state)
-        axios.get('http://localhost:3000/home', {
+        axios.get('http://localhost:3000/api/home', {
           headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
         }).then(res => {
           console.log('success'
