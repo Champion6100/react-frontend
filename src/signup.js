@@ -83,21 +83,21 @@ export class Signup extends React.Component {
                 <form onSubmit={this.submitHandler}>
                     <div className="form-group">
                         <label for="full_name">Full Name:</label>
-                        <input type="text" name="full_name" value={full_name} placeholder="Enter Full Name" className="form-control" onChange={this.changeHandler} onChange={this.handleChange} />
+                        <input type="text" name="full_name" value={full_name} placeholder="Enter Full Name" className="form-control" onChange={this.changeHandler}  />
                         {formErrors.full_name.length > 0 && (
                             <span className="errorMessage">{formErrors.full_name}</span>
                         )}
                     </div>
                     <div className="form-group">
                         <label for="e_mail">Email Id:</label>
-                        <input type="text" name="e_mail" value={e_mail} placeholder="Enter Email ID" className="form-control" onChange={this.changeHandler} onChange={this.handleChange} />
+                        <input type="text" name="e_mail" value={e_mail} placeholder="Enter Email ID" className="form-control" onChange={this.changeHandler}  />
                         {formErrors.e_mail.length > 0 && (
                             <span className="errorMessage">{formErrors.e_mail}</span>
                         )}
                     </div>
                     <div className="form-group">
                         <label for="pswd">Password:</label>
-                        <input type="password" name="pswd" value={pswd} placeholder="Enter password" className="form-control" onChange={this.changeHandler} onChange={this.handleChange} />
+                        <input type="password" name="pswd" value={pswd} placeholder="Enter password" className="form-control" onChange={this.changeHandler}  />
                         {formErrors.pswd.length > 0 && (
                             <span className="errorMessage">{formErrors.pswd}</span>
                         )}
