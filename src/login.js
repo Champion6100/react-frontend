@@ -24,7 +24,7 @@ export class Login extends React.Component {
            Password: ${this.state.pswd}
      `)
         console.log(this.state)
-        axios.post('http://sql7.freemysqlhosting.net/api/login', this.state)
+        axios.post('https://dashboard.heroku.com/apps/mynodeapp6/api/login', this.state)
             .then(res => {
                 console.log(res.data);
                 localStorage.setItem('token', res.data);         

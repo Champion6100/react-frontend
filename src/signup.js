@@ -29,7 +29,7 @@ export class Signup extends React.Component {
          Password: ${this.state.pswd}
      `)
         console.log(this.state)
-        axios.post('http://sql7.freemysqlhosting.net/api/signup', this.state)
+        axios.post('https://dashboard.heroku.com/apps/mynodeapp6/api/signup', this.state)
             .then(response => {
                 console.log(response)
                 console.log(response.data.message);
