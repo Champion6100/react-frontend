@@ -14,7 +14,7 @@ export class Home extends React.Component {
         e.preventDefault()
 
         console.log(this.state)
-        axios.get('https://dashboard.heroku.com/apps/mynodeapp6/api/home', {
+        axios.get('https://mynodeapp6.herokuapp.com/api/home', {
           headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
         }).then(res => {
           console.log('success'
